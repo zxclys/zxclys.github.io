@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>zxclys</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZXCLYS</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+
+    <main role="main" class="probootstrap-main js-probootstrap-main">
+      <div style="height: 40px">
+        
+      </div>
+      <div style="width: 100% ">
+        <img src="img/18.png" style="width: 200px">
+        <br>
+        <font size="18" color="#ff2d2d">No browsing under 18 years old!</font>
+      </div>
+      <div style="height: 100px">
+        
+      </div>
+
+	      <div class="container">
+        <div class="waterfall">
+        </div>
+    </div>
+    </main>
+
+
+
+<script>window.jQuery || document.write('<script src="./js/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="./js/bootstrap-waterfall.js"></script>
+
+<script src="scountpic.js"></script>
+<script id="waterfall-template" type="text/template">
+        <ul class="list-group">
+        	<h1>XXX</h1>
+        	<li class="list-group-item">
+        		<a href="xxx.html"><img src="img/xxx/1.png" width="200px"/>
+        		</a>
+        	</li>
+        </ul>
+        <ul class="list-group">
+        	<h1>YYY</h1>
+        	<li class="list-group-item">
+        		<a href="yyy.html"><img src="img/yyy/1.png" width="200px"/>
+        		</a>
+        	</li>
+        </ul>
+        <ul class="list-group">
+        	<h1>ZZZ</h1>
+        	<li class="list-group-item">
+        		<a href="zzz.html"><img src="img/zzz/1.png" width="200px"/>
+        		</a>
+        	</li>
+        </ul>
+</script>
+
+<script>
+    $('.waterfall')
+        .data('bootstrap-waterfall-template', $('#waterfall-template').html())
+        .waterfall();
+</script>
+</body>
+</html>
+
+    
+  </body>
+</html>

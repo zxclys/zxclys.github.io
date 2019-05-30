@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZXCLYS</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="htmleaf-container">
+    <header class="htmleaf-header">
+        <h1>yyy</h1>
+        <div>
+            <a href="xxx.html" title="xxx">xxx</a>
+            <a href="yyy.html" title="yyy">yyy</a>
+            <a href="zzz.html" title="zzz">zzz</a>
+        </div>
+    </header>
+    <div class="container">
+        <div class="waterfall">
+        </div>
+    </div>
+</div>
+
+<script>window.jQuery || document.write('<script src="./js/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="./js/bootstrap-waterfall.js"></script>
+
+<script src="scountpic.js"></script>
+<script id="waterfall-template" type="text/template">
+    <div></div>
+</script>
+
+<script type="text/javascript">
+    var count_imgs = count_yyy;
+    for (var i = count_imgs; i >= 1; i--) {
+        img_str_i = '    <ul class="list-group"><li class="list-group-item"><a href="javascript:"><img src="./img/yyy/' + i.toString() + '.png"/></a></li></ul>\n'
+        console.log(img_str_i);
+        $('#waterfall-template').append(img_str_i)
+    }
+</script>
+<script>
+    $('.waterfall')
+        .data('bootstrap-waterfall-template', $('#waterfall-template').html())
+        .waterfall();
+</script>
+</body>
+</html>
