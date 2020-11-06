@@ -45,7 +45,7 @@
     <div></div>
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     var count_imgs = count_zzz;
     for (var i = count_imgs; i >= 1; i--) {
         img_str_i = '    <ul class="list-group"><li class="list-group-item"><a href="javascript:"><img src="./img/zzz/' + i.toString() + '.png"/></a></li></ul>\n'
@@ -57,6 +57,16 @@
     $('.waterfall')
         .data('bootstrap-waterfall-template', $('#waterfall-template').html())
         .waterfall();
+</script> -->
+    
+<script type="text/javascript">
+    var count_imgs = count_zzz;
+    for (var i = count_imgs; i >= 1; i--) {        
+        var src = '<img src="./img/zzz/' + i.toString() + '.png"/>'
+        console.log(src);
+        document.write(src);
+        document.write("<br><br>");
+    }
 </script>
 </body>
 </html>
