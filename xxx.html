@@ -44,9 +44,15 @@
 <script src="scountpic.js"></script>
 <script id="waterfall-template" type="text/template">
     <div></div>
+    var count_imgs = count_xxx;
+    for (var i = count_imgs; i >= 1; i--) {
+        img_str_i = '<ul class="list-group"><li class="list-group-item"><a href="javascript:"><img src="./img/xxx/' + i.toString() + '.png"/></a></li></ul>\n'
+        document.write(img_str_i);
+    }
 </script>
 
-<!-- <script type="text/javascript">
+<!-- 
+<script type="text/javascript">
     var count_imgs = count_xxx;
     for (var i = count_imgs; i >= 1; i--) {
         img_str_i = '    <ul class="list-group"><li class="list-group-item"><a href="javascript:"><img src="./img/xxx/' + i.toString() + '.png"/></a></li></ul>\n'
@@ -54,19 +60,11 @@
         $('#waterfall-template').append(img_str_i)
     }
 </script>
+-->
 <script>
     $('.waterfall')
         .data('bootstrap-waterfall-template', $('#waterfall-template').html())
         .waterfall();
-</script> -->
-<script type="text/javascript">
-    var count_imgs = count_xxx;
-    for (var i = count_imgs; i >= 1; i--) {
-        var src = '<img src="./img/xxx/' + i.toString() + '.png"/>'
-        console.log(src);
-        document.write(src);
-        document.write("<br><br>");
-    }
 </script>
     
 </body>
