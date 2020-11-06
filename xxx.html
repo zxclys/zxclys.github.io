@@ -29,6 +29,13 @@
     </header>
     <div class="container">
         <div class="waterfall">
+            <script type="text/javascript">
+                var count_imgs = count_yyy;
+                for (var i = count_imgs; i >= 1; i--) {
+                    img_str_i = '    <ul class="list-group"><li class="list-group-item"><a href="javascript:"><img src="./img/yyy/' + i.toString() + '.png"/></a></li></ul>\n'
+                    document.write(img_str_i);
+                }
+            </script>
         </div>
     </div>
     <div class="htmleaf-footer">
@@ -42,30 +49,26 @@
 <script src="./js/bootstrap-waterfall.js"></script>
 
 <script src="scountpic.js"></script>
-<script id="waterfall-template" type="text/javascript">
-    <div>
-    </div>
-    var count_imgs = count_xxx;
-    for (var i = count_imgs; i >= 1; i--) {
-        img_str_i = '<ul class="list-group"><li class="list-group-item"><a href="javascript:"><img src="./img/xxx/' + i.toString() + '.png"/></a></li></ul>\n'
-        document.write(img_str_i);
-    }
+<script id="waterfall-template" type="text/template">
+    <div></div>
 </script>
 
-<!-- 
-<script type="text/javascript">
-    var count_imgs = count_xxx;
+<!-- <script type="text/javascript">
+    var count_imgs = count_yyy;
     for (var i = count_imgs; i >= 1; i--) {
-        img_str_i = '    <ul class="list-group"><li class="list-group-item"><a href="javascript:"><img src="./img/xxx/' + i.toString() + '.png"/></a></li></ul>\n'
+        img_str_i = '    <ul class="list-group"><li class="list-group-item"><a href="javascript:"><img src="./img/yyy/' + i.toString() + '.png"/></a></li></ul>\n'
         console.log(img_str_i);
         $('#waterfall-template').append(img_str_i)
     }
 </script>
--->
 <script>
     $('.waterfall')
         .data('bootstrap-waterfall-template', $('#waterfall-template').html())
         .waterfall();
+</script> -->
+
+<script>
+    $('.waterfall').waterfall();
 </script>
     
 </body>
