@@ -113,6 +113,7 @@ def main():
     img_rename_recursion(base_img_path, base_out_path)
 
     # index
+    t_index_lines.sort()
     out_index_str = template_base_index.replace('_tmp_index', '\n'.join(t_index_lines))
     with open(base_out_path_index, mode='w') as index_file:
         index_file.write(out_index_str)
