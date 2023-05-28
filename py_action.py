@@ -4,6 +4,7 @@ import os
 import shutil
 import random
 import sys
+import hashlib
 
 template_base = 'tmp'
 template_base_img = template_base + '/t_img.html'
@@ -22,6 +23,8 @@ with open(template_base_js, 'r') as file:
 
 t_index_lines = []
 
+type_img = ['.jpg', '.jpeg', '.png']
+
 
 # 获取该文件夹下所有的文件
 def list_dir_and_files(dir_path):
@@ -35,6 +38,24 @@ def list_dir_and_files(dir_path):
         else:
             list_files.append(file_name)
     return list_dir, list_files
+
+
+def img_md5_deduplication(dir_path, img_files):
+    img_files_md5 = []
+    img_files_deduplication = []
+    for img_file in img_files:
+        if not type_img.__contains__(os.path.splitext(img_file)[-1]):
+            continue
+        with open(os.path.join(dir_path, img_file), 'rb') as fp:
+            data = fp.read()
+        file_md5 = hashlib.md5(data).hexdigest()
+        if img_files_md5.__contains__(file_md5):
+            continue
+        else:
+            img_files_md5.append(file_md5)
+            img_files_deduplication.append(img_file)
+    print(dir_path + ", count: " + str(len(img_files)) + ", deduplication count: " + str(len(img_files_deduplication)))
+    return img_files_deduplication
 
 
 # 对图片文件进行重命名
@@ -77,6 +98,8 @@ def img_html_dir(dir_path, len_files, out_dir):
 def img_rename_recursion(base_path, base_out_path):
     print("img_rename_recursion: ", base_path)
     list_dir, list_files = list_dir_and_files(base_path)
+    # md5 deduplication
+    list_files = img_md5_deduplication(base_path, list_files)
     # 重命名
     img_rename_dir(base_path, list_files, base_out_path)
     # html构造
