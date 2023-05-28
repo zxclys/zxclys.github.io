@@ -1,7 +1,7 @@
 let imageCurrentNum = 1;
 const imagesPerNum = 200;
 const imagesPageNum = 100;
-const imageMaxCount = 87;
+const imageMaxCount = 86;
 const imageDir = "img/tw/Eric_outdoor/"
 const imageWidth = 200;
 
