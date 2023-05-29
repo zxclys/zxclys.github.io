@@ -10,6 +10,7 @@ const loadMoreButton = document.getElementById('load-more');
 const modal = document.getElementById('modal');
 const modalImage = document.getElementById('modal-image');
 const modalClose = document.getElementsByClassName('close')[0];
+const loadingAnimation = document.getElementById('loading');
 
 // 根据页面大小计算每列能容纳的图片数量
 function calculateColumns() {
@@ -43,6 +44,7 @@ function addImage(url) {
 
 // 加载当前页的图片
 function loadImages(loadImageNum) {
+    loadingAnimation.style.display = 'block';
     for (let i = 0; i < loadImageNum && imageCurrentNum <= imageMaxCount; i++) {
         addImage(imageDir + imageCurrentNum + ".jpg");
         imageCurrentNum++;
@@ -51,6 +53,10 @@ function loadImages(loadImageNum) {
     if (imageCurrentNum > imageMaxCount) {
         document.getElementById('load-more').style.display = 'none';
     }
+    pause(1).then(() => {
+            loadingAnimation.style.display = 'none';
+        }
+    );
 }
 
 // 滚动到页面底部时加载更多图片
@@ -79,6 +85,12 @@ function init() {
 loadMoreButton.addEventListener('click', () => {
     loadImages(imagesPageNum);
 });
+
+// 暂停
+async function pause(seconds) {
+    console.log('await ', seconds, ' s...');
+    await new Promise(resolve => setTimeout(resolve, seconds * 1000));
+}
 
 window.addEventListener('scroll', checkScroll);
 
