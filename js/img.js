@@ -9,6 +9,8 @@ const container = document.getElementById('container');
 const modal = document.getElementById('modal');
 const modalImage = document.getElementById('modal-image');
 const modalClose = document.getElementsByClassName('close')[0];
+const modalLeft = document.getElementsByClassName('left')[0];
+const modalRight = document.getElementsByClassName('right')[0];
 const loadingAnimation = document.getElementById('loading');
 
 let fallNum;
@@ -46,11 +48,6 @@ function onloadPic(fallHeightArr, loadImageNum) {
     isOnloadPic = true;
     const minHeight = Math.min.apply(null, fallHeightArr);
     const index = fallHeightArr.indexOf(minHeight);
-    console.log("fallHeightArr: ", fallHeightArr,
-        "loadImageNum_i: ", loadImageNum_i,
-        "imageCurrentNum: ", imageCurrentNum,
-        "minHeight: ", minHeight,
-        "index: ", index);
     const picFall = document.getElementsByClassName('pic-fall')[index];
     const img = document.createElement('img');
     img.src = imageDir + imageCurrentNum + ".jpg";
@@ -114,7 +111,6 @@ function stepContainerCenter(num) {
     }
 }
 
-
 // 添加图片事件
 function addImageListener(image) {
     // 监听鼠标点击事件
@@ -137,7 +133,6 @@ function addImageListener(image) {
 // 滚动到页面底部时加载更多图片
 function checkScroll() {
     const containerHeight = Math.min.apply(null, fallHeightArr);
-    console.log("containerHeight: ", containerHeight);
     const scrollY = window.scrollY || window.pageYOffset;
     const windowHeight = window.innerHeight;
     if (scrollY + windowHeight >= containerHeight && !isOnloadPic) {
@@ -152,6 +147,37 @@ function closeModal() {
     modalImage.src = '';
 }
 
+function getSrcNum(srcUrl) {
+    let currentSrcList = srcUrl.split('/')
+    return parseInt(currentSrcList[currentSrcList.length - 1].split('.')[0])
+}
+
+// 上一张
+function modalLeftF() {
+    let currentSrc = modalImage.src;
+    let currentSrcNum = getSrcNum(currentSrc);
+    if (currentSrcNum < 2) {
+        console.log("it is the first img. currentSrcNum:", currentSrcNum)
+        return;
+    }
+    let lastSrcNum = currentSrcNum - 1;
+    currentSrc = currentSrc.replace(currentSrcNum + '.jpg', lastSrcNum + '.jpg')
+    modalImage.src = currentSrc;
+}
+
+// 下一张
+function modalRightF() {
+    let currentSrc = modalImage.src;
+    let currentSrcNum = getSrcNum(currentSrc);
+    if (currentSrcNum >= imageMaxCount) {
+        console.log("no more img. currentSrcNum:", currentSrcNum)
+        return;
+    }
+    let nextSrcNum = currentSrcNum + 1;
+    currentSrc = currentSrc.replace(currentSrcNum + '.jpg', nextSrcNum + '.jpg')
+    modalImage.src = currentSrc;
+}
+
 // 暂停
 async function pause(seconds) {
     console.log('await ', seconds, ' s...');
@@ -163,6 +189,8 @@ async function firstInit() {
 }
 
 modalClose.addEventListener('click', closeModal);
+modalLeft.addEventListener('click', modalLeftF);
+modalRight.addEventListener('click', modalRightF);
 
 firstInit().then(() => {
     window.addEventListener('scroll', checkScroll);
