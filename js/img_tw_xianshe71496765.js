@@ -1,5 +1,5 @@
 let imageCurrentNum = 1;
-const imagesPerNum = 20;
+const imagesPerNum = 50;
 const imagesPageNum = 10;
 const imageMaxCount = 96;
 const imageDir = "img/tw/xianshe71496765/"
