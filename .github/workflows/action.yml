@@ -23,7 +23,7 @@ jobs:
           pip3 install -r ./requirements.txt
       - name: Run
         run: |
-          python3 ./py_action.py img output
+          python3 ./py_action_fall.py img output
           rm -rf ./css
           rm -rf ./js
           rm -rf ./img
