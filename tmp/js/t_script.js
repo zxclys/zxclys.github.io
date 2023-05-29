@@ -44,6 +44,12 @@ function addImage(url) {
 
 // 加载当前页的图片
 function loadImages(loadImageNum) {
+    // 已加载所有图片
+    if (imageCurrentNum > imageMaxCount) {
+        loadMoreButton.style.display = 'none';
+        loadingAnimation.style.display = 'none';
+        return;
+    }
     loadingAnimation.style.display = 'block';
     for (let i = 0; i < loadImageNum && imageCurrentNum <= imageMaxCount; i++) {
         addImage(imageDir + imageCurrentNum + ".jpg");
@@ -51,7 +57,7 @@ function loadImages(loadImageNum) {
     }
     // 已加载所有图片，隐藏加载更多按钮
     if (imageCurrentNum > imageMaxCount) {
-        document.getElementById('load-more').style.display = 'none';
+        loadMoreButton.style.display = 'none';
     }
     pause(1).then(() => {
             loadingAnimation.style.display = 'none';
