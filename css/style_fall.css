@@ -1,17 +1,19 @@
 #container {
-    column-count: 3;
-    column-gap: 20px;
-    margin: 30px;
+    margin-top: 0px;
 }
 
-.image {
-    display: inline-block;
+.pic-fall {
     width: 100%;
-    margin-bottom: 20px;
+    padding: 10px;
+    float: left;
 }
 
-.image img {
+.pic-fall img {
     width: 100%;
+    height: auto;
+    padding: 5px;
+    /*border: 1px solid #DDDDDD;*/
+    /*box-shadow: 2px 2px 3px rgba(50, 50, 50, 0.4);*/
 }
 
 .zoomable-image {
@@ -20,12 +22,6 @@
 
 .zoomable-image:hover {
     transform: scale(1.1);
-}
-
-#load-more {
-    display: block;
-    margin: 20px auto;
-    padding: 10px;
 }
 
 .modal {

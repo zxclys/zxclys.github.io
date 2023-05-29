@@ -1,34 +1,126 @@
 let imageCurrentNum = 1;
-const imagesPerNum = 200;
-const imagesPageNum = 100;
+const imagesPerNum = 20;
+const imagesPageNum = 10;
 const imageMaxCount = 86;
 const imageDir = "img/tw/Eric_outdoor/"
 const imageWidth = 200;
 
 const container = document.getElementById('container');
-const loadMoreButton = document.getElementById('load-more');
 const modal = document.getElementById('modal');
 const modalImage = document.getElementById('modal-image');
 const modalClose = document.getElementsByClassName('close')[0];
 const loadingAnimation = document.getElementById('loading');
 
-// 根据页面大小计算每列能容纳的图片数量
-function calculateColumns() {
-    const containerWidth = container.offsetWidth;
-    const columns = Math.floor(containerWidth / imageWidth);
-    return columns > 0 ? columns : 1;
+let fallNum;
+let fallHeightArr;
+let loadImageNum_i = 1;
+let isOnloadPic = false;
+
+function init() {
+    fallNum = getScreenFallNum();
+    stepContainerCenter(fallNum);
+    fallHeightArr = getFallHeightArray(fallNum);
+    console.log("init onloadPic...");
+    onloadPic(fallHeightArr, imagesPerNum);
 }
 
-// 添加一张图片到页面
-function addImage(url) {
-    const image = document.createElement('div');
-    image.classList.add('image');
-    image.innerHTML = `<img src="${url}" alt="image">`;
-    container.appendChild(image);
+/**
+ * 加载一张图片,完成后触发加载下一张图片
+ * @param fallHeightArr
+ * @param loadImageNum 加载图片数量
+ */
+function onloadPic(fallHeightArr, loadImageNum) {
+    loadingAnimation.style.display = 'block';
+    // 已加载所有图片
+    if (imageCurrentNum > imageMaxCount) {
+        loadingAnimation.style.display = 'none';
+        isOnloadPic = false;
+        return;
+    }
+    if (loadImageNum_i > loadImageNum) {
+        loadImageNum_i = 1;
+        loadingAnimation.style.display = 'none';
+        isOnloadPic = false;
+        return;
+    }
+    isOnloadPic = true;
+    const minHeight = Math.min.apply(null, fallHeightArr);
+    const index = fallHeightArr.indexOf(minHeight);
+    console.log("fallHeightArr: ", fallHeightArr,
+        "loadImageNum_i: ", loadImageNum_i,
+        "imageCurrentNum: ", imageCurrentNum,
+        "minHeight: ", minHeight,
+        "index: ", index);
+    const picFall = document.getElementsByClassName('pic-fall')[index];
+    const img = document.createElement('img');
+    img.src = imageDir + imageCurrentNum + ".jpg";
+    imageCurrentNum++;
+    loadImageNum_i++;
+    addImageListener(img);
+    img.onload = function () {
+        picFall.appendChild(img);
+        const height = img.height / (img.width / (imageWidth));
+        fallHeightArr[index] += height;
+        if (loadImageNum_i < loadImageNum && imageCurrentNum <= imageMaxCount) {
+            onloadPic(fallHeightArr, imagesPerNum);
+        } else {
+            loadImageNum_i = 1;
+            loadingAnimation.style.display = 'none';
+            isOnloadPic = false;
+        }
+    }
+}
+
+/**
+ * 创建屏幕所能承载的fall条数
+ * @returns {number} 图片流条数
+ */
+function getScreenFallNum() {
+    const width = document.body.clientWidth;
+    const num = Math.floor(width / (imageWidth + 20));
+
+    for (let i = 0; i < num; i++) {
+        const picFall = document.createElement('div');
+        picFall.className = "pic-fall";
+        picFall.style.width = imageWidth + "px";
+        container.appendChild(picFall);
+    }
+    console.log("screen fall num: ", num)
+    return num;
+}
+
+/**
+ * 获取屏幕中图片流的高度
+ * @param num 图片流的条数
+ * @returns {Array} 高度数组
+ */
+function getFallHeightArray(num) {
+    let fallHeightArr = [];
+    for (let i = 0; i < num; i++) {
+        fallHeightArr[i] = 0;
+    }
+    return fallHeightArr;
+}
+
+/**
+ * 让元素列表居中，获取该距左多少px
+ * @param num 图片流条数
+ */
+function stepContainerCenter(num) {
+    const width = document.body.clientWidth;
+    const left = Math.floor((width - num * (imageWidth + 20)) / 2);
+    if (left > 0) {
+        container.style.marginLeft = left + 'px';
+    }
+}
+
+
+// 添加图片事件
+function addImageListener(image) {
     // 监听鼠标点击事件
     image.addEventListener('click', () => {
         modal.style.display = 'block';
-        modalImage.src = url;
+        modalImage.src = image.src;
     });
     // 监听鼠标悬浮事件
     image.addEventListener('mouseenter', event => {
@@ -42,36 +134,15 @@ function addImage(url) {
     });
 }
 
-// 加载当前页的图片
-function loadImages(loadImageNum) {
-    // 已加载所有图片
-    if (imageCurrentNum > imageMaxCount) {
-        loadMoreButton.style.display = 'none';
-        loadingAnimation.style.display = 'none';
-        return;
-    }
-    loadingAnimation.style.display = 'block';
-    for (let i = 0; i < loadImageNum && imageCurrentNum <= imageMaxCount; i++) {
-        addImage(imageDir + imageCurrentNum + ".jpg");
-        imageCurrentNum++;
-    }
-    // 已加载所有图片，隐藏加载更多按钮
-    if (imageCurrentNum > imageMaxCount) {
-        loadMoreButton.style.display = 'none';
-    }
-    pause(1).then(() => {
-            loadingAnimation.style.display = 'none';
-        }
-    );
-}
-
 // 滚动到页面底部时加载更多图片
 function checkScroll() {
-    const containerHeight = container.offsetHeight;
+    const containerHeight = Math.min.apply(null, fallHeightArr);
+    console.log("containerHeight: ", containerHeight);
     const scrollY = window.scrollY || window.pageYOffset;
     const windowHeight = window.innerHeight;
-    if (scrollY + windowHeight >= containerHeight) {
-        loadImages(imagesPageNum);
+    if (scrollY + windowHeight >= containerHeight && !isOnloadPic) {
+        console.log("scroll onloadPic...");
+        onloadPic(fallHeightArr, imagesPerNum);
     }
 }
 
@@ -81,26 +152,18 @@ function closeModal() {
     modalImage.src = '';
 }
 
-// 初始化页面
-function init() {
-    container.style.columnCount = calculateColumns();
-    loadImages(imagesPerNum);
-}
-
-// 加载更多点击事件
-loadMoreButton.addEventListener('click', () => {
-    loadImages(imagesPageNum);
-});
-
 // 暂停
 async function pause(seconds) {
     console.log('await ', seconds, ' s...');
     await new Promise(resolve => setTimeout(resolve, seconds * 1000));
 }
 
-window.addEventListener('scroll', checkScroll);
+async function firstInit() {
+    init();
+}
 
 modalClose.addEventListener('click', closeModal);
 
-init();
-
+firstInit().then(() => {
+    window.addEventListener('scroll', checkScroll);
+});
