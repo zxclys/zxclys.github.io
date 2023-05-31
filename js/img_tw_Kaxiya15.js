@@ -54,6 +54,19 @@ function onloadPic(fallHeightArr, loadImageNum) {
     imageCurrentNum++;
     loadImageNum_i++;
     addImageListener(img);
+    img.onerror = function () {
+        console.log("img load error:", img.src, "index:", index);
+        picFall.appendChild(img);
+        // height = imageWidth
+        fallHeightArr[index] += imageWidth;
+        if (loadImageNum_i < loadImageNum && imageCurrentNum <= imageMaxCount) {
+            onloadPic(fallHeightArr, imagesPerNum);
+        } else {
+            loadImageNum_i = 1;
+            loadingAnimation.style.display = 'none';
+            isOnloadPic = false;
+        }
+    }
     img.onload = function () {
         picFall.appendChild(img);
         const height = img.height / (img.width / (imageWidth));
