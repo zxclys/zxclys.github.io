@@ -32,7 +32,7 @@ function init() {
  * @param loadImageNum 加载图片数量
  */
 function onloadPic(fallHeightArr, loadImageNum) {
-    loadingAnimation.style.display = 'block';
+    // loadingAnimation.style.display = 'block';
     // 已加载所有图片
     if (imageCurrentNum > imageMaxCount) {
         loadingAnimation.style.display = 'none';
