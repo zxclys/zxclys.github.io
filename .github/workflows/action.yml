@@ -22,7 +22,11 @@ jobs:
           python3 -m pip install --upgrade pip
           pip3 install -r ./requirements.txt
       - name: Run
+        env:
+          T_API_KEY: ${{ secrets.T_API_KEY }}
+          T_API_SEC: ${{ secrets.T_API_SEC }}
         run: |
+          python3 ./py_action_twt_img.py $T_API_KEY $T_API_SEC
           python3 ./py_action_fall.py img output
           rm -rf ./css
           rm -rf ./js
