@@ -1,0 +1,9 @@
+pip
+configparser
+attrs
+wheel
+Jinja2
+setuptools
+future
+requests
+python-dateutil
