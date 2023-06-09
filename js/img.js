@@ -206,6 +206,11 @@ async function firstInit() {
 modalClose.addEventListener('click', closeModal);
 modalLeft.addEventListener('click', modalLeftF);
 modalRight.addEventListener('click', modalRightF);
+modal.addEventListener('click', function (event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
 
 firstInit().then(() => {
     window.addEventListener('scroll', checkScroll);
