@@ -12,6 +12,7 @@ const modalClose = document.getElementsByClassName('close')[0];
 const modalLeft = document.getElementsByClassName('left')[0];
 const modalRight = document.getElementsByClassName('right')[0];
 const loadingAnimation = document.getElementById('loading');
+const loadingText = document.getElementById('loading-text');
 
 let fallNum;
 let fallHeightArr;
@@ -32,7 +33,8 @@ function init() {
  * @param loadImageNum 加载图片数量
  */
 function onloadPic(fallHeightArr, loadImageNum) {
-    // loadingAnimation.style.display = 'block';
+    loadingText.textContent = 'loading... (' + loadImageNum_i + '/' + loadImageNum + ', total: ' + imageCurrentNum + '/' + imageMaxCount + ')';
+    loadingAnimation.style.display = 'block';
     // 已加载所有图片
     if (imageCurrentNum > imageMaxCount) {
         loadingAnimation.style.display = 'none';
