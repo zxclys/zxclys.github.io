@@ -1,7 +1,7 @@
 let imageCurrentNum = 1;
 const imagesPerNum = 50;
 const imagesPageNum = 10;
-const imageMaxCount = 114;
+const imageMaxCount = 249;
 const imageDir = "img/tw/Kaxiya15/"
 const imageWidth = 200;
 
