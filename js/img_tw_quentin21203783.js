@@ -1,7 +1,7 @@
 let imageCurrentNum = 1;
 const imagesPerNum = 50;
 const imagesPageNum = 10;
-const imageMaxCount = 487;
+const imageMaxCount = 488;
 const imageDir = "img/tw/quentin21203783/"
 const imageWidth = 200;
 

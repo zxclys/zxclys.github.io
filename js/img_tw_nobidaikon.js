@@ -1,7 +1,7 @@
 let imageCurrentNum = 1;
 const imagesPerNum = 50;
 const imagesPageNum = 10;
-const imageMaxCount = 166;
+const imageMaxCount = 168;
 const imageDir = "img/tw/nobidaikon/"
 const imageWidth = 200;
 
