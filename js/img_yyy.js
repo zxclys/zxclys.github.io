@@ -1,7 +1,7 @@
 let imageCurrentNum = 1;
 const imagesPerNum = 50;
 const imagesPageNum = 10;
-const imageMaxCount = 448;
+const imageMaxCount = 510;
 const imageDir = "img/yyy/"
 const imageWidth = 200;
 
