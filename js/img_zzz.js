@@ -11,6 +11,10 @@ const modalImage = document.getElementById('modal-image');
 const modalClose = document.getElementsByClassName('close')[0];
 const modalLeft = document.getElementsByClassName('left')[0];
 const modalRight = document.getElementsByClassName('right')[0];
+const modalRandom = document.getElementById('modal-random');
+const modalRandomAwait = document.getElementById('modal-random-await');
+let modalRandomIsEnd = true;
+let modalRandomAwaitS = 1000;
 const loadingAnimation = document.getElementById('loading');
 const loadingText = document.getElementById('loading-text');
 
@@ -158,10 +162,10 @@ function checkScroll() {
 
 // 关闭大图预览窗口
 function closeModal() {
+    modalRandomIsEnd = true;
     modal.style.display = 'none';
     modalImage.src = '';
 }
-
 function getSrcNum(srcUrl) {
     let currentSrcList = srcUrl.split('/')
     return parseInt(currentSrcList[currentSrcList.length - 1].split('.')[0])
@@ -169,6 +173,7 @@ function getSrcNum(srcUrl) {
 
 // 上一张
 function modalLeftF() {
+    modalRandomIsEnd = true;
     let currentSrc = modalImage.src;
     let currentSrcNum = getSrcNum(currentSrc);
     if (currentSrcNum < 2) {
@@ -182,6 +187,7 @@ function modalLeftF() {
 
 // 下一张
 function modalRightF() {
+    modalRandomIsEnd = true;
     let currentSrc = modalImage.src;
     let currentSrcNum = getSrcNum(currentSrc);
     if (currentSrcNum >= imageMaxCount) {
@@ -191,6 +197,32 @@ function modalRightF() {
     let nextSrcNum = currentSrcNum + 1;
     currentSrc = currentSrc.replace(currentSrcNum + '.jpg', nextSrcNum + '.jpg')
     modalImage.src = currentSrc;
+}
+
+function delay(milliseconds) {
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
+}
+
+// Random
+async function modalRandomF() {
+    modalRandomIsEnd = !modalRandomIsEnd;
+    while (!modalRandomIsEnd) {
+        let currentSrc = modalImage.src;
+        let currentSrcNum = getSrcNum(currentSrc);
+        let randomV = Math.random();
+        let randomSrcNum = Math.floor(randomV * imageMaxCount) + 1;
+        currentSrc = currentSrc.replace(currentSrcNum + '.jpg', randomSrcNum + '.jpg')
+        modalImage.src = currentSrc;
+        await delay(modalRandomAwaitS);
+    }
+}
+
+// Random 时间
+function modalRandomAwaitF() {
+    modalRandomAwaitS = modalRandomAwait.value;
+    console.log("modalRandomAwaitS: ", modalRandomAwaitS);
 }
 
 // 暂停
@@ -206,6 +238,8 @@ async function firstInit() {
 modalClose.addEventListener('click', closeModal);
 modalLeft.addEventListener('click', modalLeftF);
 modalRight.addEventListener('click', modalRightF);
+modalRandom.addEventListener('click', modalRandomF);
+modalRandomAwait.addEventListener('change', modalRandomAwaitF);
 modal.addEventListener('click', function (event) {
     if (event.target === modal) {
         closeModal();

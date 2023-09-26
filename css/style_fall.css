@@ -79,6 +79,18 @@
     right: 25px;
 }
 
+.bottom {
+    position: absolute;
+    top: 99%;
+    bottom: 25px;
+}
+.bottom-2 {
+    position: absolute;
+    top: 99%;
+    left: 100px;
+    bottom: 25px;
+}
+
 #loading {
     display: none;
     position: fixed;
